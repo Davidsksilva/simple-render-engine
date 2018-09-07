@@ -1,11 +1,7 @@
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
 
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
-#include <iostream>
+#include "includes.hpp"
 
 #define WIDTH 1280
 #define HEIGHT 720
@@ -22,7 +18,7 @@ class Display{
 
     static void close();
 
-    static void clear(float r = 0, float g = 0,float b = 0);
+    static void clear( GLfloat r = 0, GLfloat g = 0, GLfloat b = 0 );
 
     static bool isOpen();
 

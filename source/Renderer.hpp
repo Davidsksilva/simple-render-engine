@@ -5,5 +5,5 @@ class Renderer{
     public:
 
     void prepare();
-    void render(RawModel model);
+    void render( RawModel model );
 };

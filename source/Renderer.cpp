@@ -2,16 +2,24 @@
 
 void Renderer::prepare(){
 
-    glClearColor(1, 0, 1, 1);
+    // Clear Color Buffer
     glClear(GL_COLOR_BUFFER_BIT);
+    // Set Background Color
+    glClearColor(1, 0, 1, 1);
+    
 }
 
-void Renderer::render(RawModel model){
+void Renderer::render( RawModel model ){
 
-    glBindVertexArray(model.getVaoID());
-    glEnableVertexAttribArray(0);
-    glDrawArrays(GL_TRIANGLES,0,model.getVertexCount());
-    glDisableVertexAttribArray(0);
-    glBindVertexArray(0);
+    // Bind VAO
+    glBindVertexArray( model.getVaoID() );
+    // Enable VBO
+    glEnableVertexAttribArray( 0 );
+    // Draw Triangles using Index Buffers
+    glDrawElements( GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0 );
+    // Disable VBO
+    glDisableVertexAttribArray( 0 );
+    // Unbind VAO
+    glBindVertexArray( 0 );
 
 }
