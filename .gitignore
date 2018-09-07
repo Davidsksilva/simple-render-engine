@@ -2,3 +2,5 @@ run
 *.o
 build/*
 .vscode/
+
+!build/.gitkeep
