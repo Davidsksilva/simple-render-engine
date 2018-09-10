@@ -2,17 +2,20 @@
 #include "includes.hpp"
 #include "Loader.hpp"
 #include "Renderer.hpp"
+#include "StaticShader.hpp"
  
 int main(int argc, char** argv)
 {
     // Create Display
     Display::create();
-    // Crlearing display with white color
+    // Cleearing display with white color
     Display::clear(1.0, 1.0, 1.0);
     // Create loader object
     Loader loader = Loader();
     // Create renderer object
     Renderer renderer = Renderer();
+    // Create Shader
+    StaticShader shader = StaticShader();
 
     std::vector<GLfloat>vertices = {
         -0.5f,0.5f,0.0f,
@@ -32,16 +35,16 @@ int main(int argc, char** argv)
     while(Display::isOpen()){
         // Prepare renderer
         renderer.prepare();
-
+        shader.start();
         renderer.render(model);
-
+        shader.stop();
         // Update display
         Display::update();
         // Check for close event
         Display::checkForClose();
     }
-
     // Clean up VAOs and VBOs to avoid memory leak
+    shader.cleanUp();
     loader.cleanUp();
     return 0;
 }

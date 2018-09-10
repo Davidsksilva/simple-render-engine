@@ -8,6 +8,5 @@
 #include <GL/glew.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <iostream>
 
 #endif // INCLUDES_HPP
