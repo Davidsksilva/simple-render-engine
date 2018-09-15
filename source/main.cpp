@@ -1,9 +1,13 @@
-#include "Display.hpp"
 #include "includes.hpp"
+#include "RawModel.hpp"
+#include "Display.hpp"
+#include "StaticShader.hpp"
 #include "Loader.hpp"
 #include "Renderer.hpp"
-#include "StaticShader.hpp"
- 
+#include "ModelTexture.hpp"
+#include "TexturedModel.hpp"
+
+
 int main(int argc, char** argv)
 {
     // Create Display
@@ -23,20 +27,36 @@ int main(int argc, char** argv)
         0.5f,-0.5,0.0f,
         0.5,0.5f,0.0f
     };
+     std::vector<GLfloat>verticess = {
+        -1.0f,1.0f,0.0f,
+        -1.0f,-1.0f,0.0f,
+        1.0f,-1.0,0.0f,
+        1.0f,1.0f,0.0f
+    };
+
 
     std::vector<GLuint>indices = {
         0,1,3,
         3,1,2
     };
 
-    RawModel model = loader.loadToVAO( vertices, indices );
+    std::vector<GLfloat>textureCoords = {
+        0,0,
+        0,1,
+        1,1,
+        1,0
+    };
 
+    RawModel model = loader.loadToVAO( vertices, indices, textureCoords );
+    ModelTexture texture = ModelTexture( loader.loadTexture( "source/res/checkerboard.png" ) );
+    TexturedModel texturedModel = TexturedModel(model,texture);
+    
     // While the window is open
     while(Display::isOpen()){
         // Prepare renderer
         renderer.prepare();
         shader.start();
-        renderer.render(model);
+        renderer.render(texturedModel);
         shader.stop();
         // Update display
         Display::update();

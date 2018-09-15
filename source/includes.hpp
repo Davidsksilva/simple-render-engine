@@ -3,10 +3,15 @@
 
 // MAIN INCLUDER
 
-//#define GLEW_STATIC
-
+#define GLEW_STATIC
 #include <GL/glew.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <algorithm>
+
+
 
 #endif // INCLUDES_HPP

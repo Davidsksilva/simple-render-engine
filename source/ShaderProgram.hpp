@@ -1,9 +1,4 @@
 #include "includes.hpp"
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <algorithm>
 
 
 class ShaderProgram{

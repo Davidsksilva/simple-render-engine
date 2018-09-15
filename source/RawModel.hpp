@@ -9,12 +9,14 @@ class RawModel{
     GLuint vaoID, vertexCount;
 
     public:
+    RawModel() : vaoID ( 0 ), vertexCount ( 0 ){
+
+    }
     RawModel( GLuint vaoID, GLuint vertexCount ){
         // Set inicial attributes
         this->vaoID = vaoID;
         this->vertexCount = vertexCount;
     };
-
     GLuint getVaoID(){
         // VAO ID getter
         return  vaoID;

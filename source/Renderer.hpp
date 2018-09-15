@@ -1,9 +1,10 @@
 #include "includes.hpp"
+#include "TexturedModel.hpp"
 #include "RawModel.hpp"
 
 class Renderer{
     public:
 
     void prepare();
-    void render( RawModel model );
+    void render( TexturedModel model );
 };
