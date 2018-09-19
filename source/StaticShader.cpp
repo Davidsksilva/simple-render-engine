@@ -10,3 +10,13 @@ void StaticShader::bindAttributes(){
     bindAttribute(1, "textureCoords");
 
 }
+
+void StaticShader::getAllUniformLocations(){
+
+    loc_transformationMatrix = getUniformLocation( "transformationMatrix" );
+}
+
+void StaticShader::loadTransformationMatrix( glm::mat4 matrix ){
+
+    loadMatrix( loc_transformationMatrix, matrix );
+}

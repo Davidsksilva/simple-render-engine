@@ -1,4 +1,5 @@
 #include "ShaderProgram.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 std::string readFile( const char* filePath ){
     std::string content;
@@ -54,15 +55,18 @@ ShaderProgram::ShaderProgram(const char* vertexFile,const char* fragmentFile){
 }
 
 void ShaderProgram::createProgram(){
+
     programID = glCreateProgram();
     glAttachShader( programID, vertexShaderID );
     glAttachShader( programID, fragmentShaderID );
-     bindAttributes();
+    bindAttributes();
     glLinkProgram(programID);
     glValidateProgram(programID);
+    getAllUniformLocations();
 }
 
 void ShaderProgram::bindAttribute(GLint attribute, const char* variableName){
+
     glBindAttribLocation(programID, attribute, variableName);
 }
 
@@ -74,6 +78,35 @@ void ShaderProgram::start(){
 void ShaderProgram::stop(){
 
     glUseProgram(0);
+}
+
+GLuint ShaderProgram::getUniformLocation( std::string uniformName ){
+
+    glGetUniformLocation(programID, uniformName.c_str);
+}
+
+void ShaderProgram::loadFloat( GLuint location, GLfloat value ){
+
+    glUniform1f(  location, value );
+}
+
+void ShaderProgram::loadVector( GLuint location, glm::vec3 vector){
+
+    glUniform3f( location, vector.x, vector.y, vector.z  );
+}
+
+void ShaderProgram::loadBool( GLuint location, bool value ){
+
+    GLfloat to_load = 0.0f;
+
+    value ? to_load = 1.0f : to_load = 0.0f;
+
+    glUniform1f( location, to_load );
+}
+
+void ShaderProgram::loadMatrix( GLuint location, glm::mat4 matrix ){
+
+    glUniformMatrix4fv( location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 void ShaderProgram::cleanUp(){
