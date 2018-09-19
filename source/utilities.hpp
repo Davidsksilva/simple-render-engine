@@ -1,3 +1,6 @@
+#ifndef UTILITIES_HPP
+#define UTILITIES_HPP
+
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -46,6 +49,8 @@ glm::mat4 createTransformationMatrix( glm::vec3 translation, glm::vec3 rotation,
     glm::mat4 RotationMatrix = createRotationMatrix(rotation);
 
     return TranslationMatrix * RotationMatrix * ScaleMatrix;
-    
+
 }
+
+#endif // UTILITIES_HPP
 
