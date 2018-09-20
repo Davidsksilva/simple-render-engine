@@ -4,11 +4,17 @@
 std::unique_ptr<sf::RenderWindow> Display::_window;
 
 void Display::create(){
+    sf::ContextSettings settings;
+    settings.depthBits = 24;
+    settings.stencilBits = 8;
+    settings.antialiasingLevel = 4;
+    settings.majorVersion = 3;
+    settings.minorVersion = 0;
 
     // Creating the window
-    _window = std::make_unique<sf::RenderWindow>( sf::VideoMode(WIDTH,HEIGHT), "OpenGL", sf::Style::Default );
+    _window = std::make_unique<sf::RenderWindow>( sf::VideoMode(WIDTH,HEIGHT), "OpenGL", sf::Style::Default, settings );
     // Setting framerate limit
-    _window->setFramerateLimit( 120 );
+    _window->setFramerateLimit( 60 );
 
     // Initialize glew
     glewInit();
@@ -16,6 +22,7 @@ void Display::create(){
     // Set Viewport
     glViewport( 0, 0, WIDTH, HEIGHT );
 
+    glEnable    ( GL_DEPTH_TEST );
 }
 
 void Display::update(){
@@ -58,7 +65,6 @@ void Display::checkForClose(){
         }
     }
 }
-
 
 
 

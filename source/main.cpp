@@ -1,46 +1,96 @@
 #include "includes.hpp"
-#include "RawModel.hpp"
+#include "models/RawModel.hpp"
 #include "Display.hpp"
-#include "StaticShader.hpp"
+#include "shaders/StaticShader.hpp"
 #include "Loader.hpp"
 #include "Renderer.hpp"
-#include "ModelTexture.hpp"
-#include "TexturedModel.hpp"
+#include "models/ModelTexture.hpp"
+#include "models/TexturedModel.hpp"
+#include "Entity.hpp"
+#include "Camera.hpp"
 
-
-int main(int argc, char** argv)
+int main( void )
 {
-    // Create Display
+
     Display::create();
-    // Cleearing display with white color
     Display::clear(1.0, 1.0, 1.0);
-    // Create loader object
+    
     Loader loader = Loader();
-    // Create renderer object
-    Renderer renderer = Renderer();
-    // Create Shader
     StaticShader shader = StaticShader();
+    Renderer renderer = Renderer( shader );
+
+    
+    
 
     std::vector<GLfloat>vertices = {
-        -0.5f,0.5f,0.0f,
-        -0.5f,-0.5f,0.0f,
-        0.5f,-0.5,0.0f,
-        0.5,0.5f,0.0f
+        -0.5f,0.5f,-0.5f,	
+        -0.5f,-0.5f,-0.5f,	
+        0.5f,-0.5f,-0.5f,	
+        0.5f,0.5f,-0.5f,		
+        
+        -0.5f,0.5f,0.5f,	
+        -0.5f,-0.5f,0.5f,	
+        0.5f,-0.5f,0.5f,	
+        0.5f,0.5f,0.5f,
+        
+        0.5f,0.5f,-0.5f,	
+        0.5f,-0.5f,-0.5f,	
+        0.5f,-0.5f,0.5f,	
+        0.5f,0.5f,0.5f,
+        
+        -0.5f,0.5f,-0.5f,	
+        -0.5f,-0.5f,-0.5f,	
+        -0.5f,-0.5f,0.5f,	
+        -0.5f,0.5f,0.5f,
+        
+        -0.5f,0.5f,0.5f,
+        -0.5f,0.5f,-0.5f,
+        0.5f,0.5f,-0.5f,
+        0.5f,0.5f,0.5f,
+        
+        -0.5f,-0.5f,0.5f,
+        -0.5f,-0.5f,-0.5f,
+        0.5f,-0.5f,-0.5f,
+        0.5f,-0.5f,0.5f
+				
     };
-     std::vector<GLfloat>verticess = {
-        -1.0f,1.0f,0.0f,
-        -1.0f,-1.0f,0.0f,
-        1.0f,-1.0,0.0f,
-        1.0f,1.0f,0.0f
-    };
-
 
     std::vector<GLuint>indices = {
-        0,1,3,
-        3,1,2
+        0,1,3,	
+        3,1,2,	
+        4,5,7,
+        7,5,6,
+        8,9,11,
+        11,9,10,
+        12,13,15,
+        15,13,14,	
+        16,17,19,
+        19,17,18,
+        20,21,23,
+        23,21,22
     };
 
     std::vector<GLfloat>textureCoords = {
+        0,0,
+        0,1,
+        1,1,
+        1,0,			
+        0,0,
+        0,1,
+        1,1,
+        1,0,			
+        0,0,
+        0,1,
+        1,1,
+        1,0,
+        0,0,
+        0,1,
+        1,1,
+        1,0,
+        0,0,
+        0,1,
+        1,1,
+        1,0,
         0,0,
         0,1,
         1,1,
@@ -48,21 +98,28 @@ int main(int argc, char** argv)
     };
 
     RawModel model = loader.loadToVAO( vertices, indices, textureCoords );
-    ModelTexture texture = ModelTexture( loader.loadTexture( "source/res/checkerboard.png" ) );
-    TexturedModel texturedModel = TexturedModel(model,texture);
+    ModelTexture texture = ModelTexture( loader.loadTexture( "source/data/img/checkerboard.png" ) );
+    TexturedModel staticModel = TexturedModel(model,texture);
+    Entity entity = Entity( staticModel, glm::vec3(0,0,-5.0f), glm::vec3(0,0,0), 1.0f );
+    Camera camera = Camera();
     
-    // While the window is open
+    // Main Loop
     while(Display::isOpen()){
-        // Prepare renderer
+       // entity.increasePosition(0,0,-0.1f);
+        camera.move();
+        entity.increaseRotation(0.01f,0.01f,0);
         renderer.prepare();
         shader.start();
-        renderer.render(texturedModel);
+        shader.loadViewMatrix( camera );
+
+        renderer.render( entity, shader );
+
         shader.stop();
-        // Update display
+
         Display::update();
-        // Check for close event
         Display::checkForClose();
     }
+
     // Clean up VAOs and VBOs to avoid memory leak
     shader.cleanUp();
     loader.cleanUp();

@@ -1,17 +1,15 @@
 #ifndef MODEL_TEXTURE_HPP
 #define MODEL_TEXTURE_HPP
-#include "includes.hpp"
+#include "../includes.hpp"
 
 class ModelTexture{
     private:
 
-    GLuint textureID;
-
-    
+    GLuint m_texture_id;
 
     public:
     ModelTexture();
-    ModelTexture( GLuint id );
+    ModelTexture( const GLuint t_id );
     GLuint getID();
 };
 

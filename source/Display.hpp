@@ -3,8 +3,7 @@
 
 #include "includes.hpp"
 
-#define WIDTH 1280
-#define HEIGHT 720
+
 
 class Display{
 
@@ -23,6 +22,11 @@ class Display{
     static bool isOpen();
 
     static void checkForClose();
+
+    static GLfloat getHeight();
+
+    constexpr static GLuint WIDTH  = 1280;
+    constexpr static GLuint HEIGHT = 720;
 
 };
 
