@@ -22,7 +22,7 @@ sudo apt-get install libsfml-dev
 
 ### Running
 
-To run the program, we only need ``make`` on the root folder.
+To run the program, ``make`` on the root folder.
 
 On the root folder:
 
@@ -46,12 +46,12 @@ Then:
 
 ## Authors
 
-* **David Simon** - *Initial work* - [Davidsksilva](https://github.com/Davidsksilva)
+* **David Simon** - *Whole work* - [Davidsksilva](https://github.com/Davidsksilva)
 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Still Working 
 
 ## Acknowledgments
 
