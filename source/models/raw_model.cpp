@@ -1,4 +1,4 @@
-#include "RawModel.hpp"
+#include "raw_model.hpp"
 
 RawModel::RawModel() : m_vao_id ( 0 ), m_vertex_count ( 0 ){
 

@@ -1,4 +1,4 @@
-#include "TexturedModel.hpp"
+#include "textured_model.hpp"
 
 TexturedModel::TexturedModel() : m_raw_model(RawModel()), m_texture(ModelTexture()){
 

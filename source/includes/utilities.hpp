@@ -6,8 +6,7 @@
 #include <GL/glew.h>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/transform.hpp> 
-#include "../Camera.hpp"
-
+#include "../engine_core/camera.hpp"
 
 namespace utils{
 

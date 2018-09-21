@@ -1,13 +1,13 @@
-#include "includes.hpp"
-#include "models/RawModel.hpp"
-#include "Display.hpp"
-#include "shaders/StaticShader.hpp"
-#include "Loader.hpp"
-#include "Renderer.hpp"
-#include "models/ModelTexture.hpp"
-#include "models/TexturedModel.hpp"
-#include "Entity.hpp"
-#include "Camera.hpp"
+#include "includes/includes.hpp"
+#include "shaders/static_shader.hpp"
+#include "models/raw_model.hpp"
+#include "models/model_texture.hpp"
+#include "models/textured_model.hpp"
+#include "entities/entity.hpp"
+#include "engine_core/camera.hpp"
+#include "engine_core/loader.hpp"
+#include "engine_core/renderer.hpp"
+#include "engine_core/display.hpp"
 
 int main( void )
 {

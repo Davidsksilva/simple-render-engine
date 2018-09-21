@@ -1,9 +1,9 @@
 #ifndef TEXTURED_MODEL_HPP
 #define TEXTURED_MODEL_HPP
 
-#include "../includes.hpp"
-#include "ModelTexture.hpp"
-#include "RawModel.hpp"
+#include "../includes/includes.hpp"
+#include "model_texture.hpp"
+#include "raw_model.hpp"
 
 class TexturedModel{
 

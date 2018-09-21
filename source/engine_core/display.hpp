@@ -1,7 +1,7 @@
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
 
-#include "includes.hpp"
+#include "../includes/includes.hpp"
 
 
 
@@ -9,7 +9,7 @@ class Display{
 
     public:
 
-    static std::unique_ptr<sf::RenderWindow> _window;
+    static std::unique_ptr<sf::RenderWindow> m_window;
     
     static void create();
      
@@ -17,7 +17,7 @@ class Display{
 
     static void close();
 
-    static void clear( GLfloat r = 0, GLfloat g = 0, GLfloat b = 0 );
+    static void clear( const GLfloat t_r = 0, const GLfloat t_g = 0, const GLfloat t_b = 0 );
 
     static bool isOpen();
 
@@ -25,8 +25,8 @@ class Display{
 
     static GLfloat getHeight();
 
-    constexpr static GLuint WIDTH  = 1280;
-    constexpr static GLuint HEIGHT = 720;
+    constexpr static GLuint kWIDTH  = 1280;
+    constexpr static GLuint kHEIGHT = 720;
 
 };
 

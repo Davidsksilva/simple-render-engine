@@ -1,6 +1,6 @@
 #ifndef MODEL_TEXTURE_HPP
 #define MODEL_TEXTURE_HPP
-#include "../includes.hpp"
+#include "../includes/includes.hpp"
 
 class ModelTexture{
     private:

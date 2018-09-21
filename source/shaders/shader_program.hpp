@@ -1,7 +1,7 @@
 #ifndef SHADER_PROGRAM_HPP
 #define SHADER_PROGRAM_HPP
 
-#include "../includes.hpp"
+#include "../includes/includes.hpp"
 
 
 class ShaderProgram{

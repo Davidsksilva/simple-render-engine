@@ -1,41 +1,40 @@
-#include "Camera.hpp"
+#include "camera.hpp"
 
-Camera::Camera(){
+Camera::Camera() : m_position(glm::vec3( 0, 0, 0 )){
 
-    position = glm::vec3(0,0,0);
 }
 
 void Camera::move(){
 
     if( sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-        position.z -= 0.02f;
+        m_position.z -= 0.02f;
     }
 
     if( sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-        position.x += 0.02f;
+        m_position.x += 0.02f;
     }
 
     if( sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-        position.x -= 0.02f;
+        m_position.x -= 0.02f;
     }
 
     if( sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-        position.z += 0.02f;
+        m_position.z += 0.02f;
     }
 
 }
 
 GLfloat Camera::getPitch(){
 
-    return this->pitch;
+    return m_pitch;
 }
 
 GLfloat Camera::getYaw(){
 
-    return this->yaw;
+    return m_yaw;
 }
 
 glm::vec3 Camera::getPosition(){
 
-    return this->position;
+    return m_position;
 }

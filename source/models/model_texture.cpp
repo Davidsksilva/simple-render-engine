@@ -1,4 +1,4 @@
-#include "ModelTexture.hpp"
+#include "model_texture.hpp"
 
 ModelTexture::ModelTexture( const GLuint t_id ){
     

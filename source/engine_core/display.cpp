@@ -1,10 +1,12 @@
-#include "Display.hpp"
+#include "display.hpp"
 
 // Creating static pointer to the window
-std::unique_ptr<sf::RenderWindow> Display::_window;
+std::unique_ptr<sf::RenderWindow> Display::m_window;
 
 void Display::create(){
+
     sf::ContextSettings settings;
+
     settings.depthBits = 24;
     settings.stencilBits = 8;
     settings.antialiasingLevel = 4;
@@ -12,15 +14,15 @@ void Display::create(){
     settings.minorVersion = 0;
 
     // Creating the window
-    _window = std::make_unique<sf::RenderWindow>( sf::VideoMode(WIDTH,HEIGHT), "OpenGL", sf::Style::Default, settings );
+    m_window = std::make_unique<sf::RenderWindow>( sf::VideoMode(kWIDTH,kHEIGHT), "OpenGL", sf::Style::Default, settings );
     // Setting framerate limit
-    _window->setFramerateLimit( 60 );
+    m_window->setFramerateLimit( 60 );
 
     // Initialize glew
     glewInit();
 
     // Set Viewport
-    glViewport( 0, 0, WIDTH, HEIGHT );
+    glViewport( 0, 0, kWIDTH, kHEIGHT );
 
     glEnable    ( GL_DEPTH_TEST );
 }
@@ -28,28 +30,28 @@ void Display::create(){
 void Display::update(){
 
     // Updating the window
-    _window->display();
+    m_window->display();
 
 }
 
 void Display::close(){
 
     // Close the window
-    _window->close();
+    m_window->close();
 }
 
-void Display::clear(GLfloat r, GLfloat g,GLfloat b){
+void Display::clear( const GLfloat t_r, const GLfloat t_g, const GLfloat t_b ){
 
     // Clear Color Buffers
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     // Set background color
-    glClearColor( r, g, b, 1 );
+    glClearColor( t_r, t_g, t_b, 1 );
 }
 
 bool Display::isOpen(){
 
     // Return if the  window is open
-    return _window->isOpen();
+    return m_window->isOpen();
 }
 
 void Display::checkForClose(){
@@ -57,11 +59,11 @@ void Display::checkForClose(){
     sf::Event evnt;
 
     // Checking window events
-    while( _window->pollEvent( evnt ) ){
+    while( m_window->pollEvent( evnt ) ){
 
         //Check if event is closing
         if( evnt.type == sf::Event::Closed ){
-            _window->close();
+            m_window->close();
         }
     }
 }

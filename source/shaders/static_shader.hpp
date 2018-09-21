@@ -1,6 +1,6 @@
 #ifndef STATIC_SHADER_HPP
 #define STATIC_SHADER_HPP
-#include "ShaderProgram.hpp"
+#include "shader_program.hpp"
 #include "../includes/utilities.hpp"
 
 class Camera;
