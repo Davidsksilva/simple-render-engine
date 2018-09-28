@@ -3,7 +3,7 @@
 
 #include "../includes/includes.hpp"
 #include "../models/raw_model.hpp"
-
+#include "../includes/utilities.hpp"
 
 
 class Loader{
@@ -13,6 +13,8 @@ class Loader{
     RawModel loadToVAO( const std::vector<GLfloat>& t_positions, const std::vector<GLuint>& t_indices, const std::vector<GLfloat>& t_texture_coordinates );
 
     GLuint loadTexture( const std::string t_file_name);
+
+    RawModel loadObj( const char* t_file_path );
 
     void cleanUp();
 

@@ -1,13 +1,13 @@
 #include "loader.hpp"
 
-RawModel Loader::loadToVAO( const std::vector<GLfloat>& t_positions,const std::vector<GLuint>& t_indices, const std::vector<GLfloat>& t_texture_coordinates){
+RawModel Loader::loadToVAO( const std::vector<GLfloat>& t_positionitions,const std::vector<GLuint>& t_indices, const std::vector<GLfloat>& t_texture_coordinates_vector){
 
     // Create VAO
     GLuint vao_id = createVAO();
     bindIndicesBuffer(t_indices);
-    // Store model positions on VAO 0
-    storeDataInAttributeList( 0, 3, t_positions );
-    storeDataInAttributeList( 1, 2, t_texture_coordinates);
+    // Store model positionitions on VAO 0
+    storeDataInAttributeList( 0, 3, t_positionitions );
+    storeDataInAttributeList( 1, 2, t_texture_coordinates_vector);
     // Unbind
     unbindVAO();
     // Return RawModel
@@ -18,20 +18,26 @@ GLuint Loader::loadTexture( const std::string t_file_name ){
     sf::Image image;
     GLuint texture_id ;
     glGenTextures(1, &texture_id);
-    glBindTexture(GL_TEXTURE_2D, texture_id);
+    
 
     // Load texture array from file
     if(!image.loadFromFile( t_file_name ))
         std::cerr << "Problem loading texture image " << std::endl;
 
+    image.flipVertically();
+    
+    glBindTexture(GL_TEXTURE_2D, texture_id);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
 
-    // Set Wrapping
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     // Set Filtering
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
+    
+    // Set Wrapping
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    
+    
 
     m_textures.push_back(texture_id);
 
@@ -97,4 +103,26 @@ void Loader::bindIndicesBuffer( std::vector<GLuint> indices ){
 
 
 }
+
+ RawModel Loader::loadObj( const char* t_file_path ){
+
+     std::vector < GLfloat > vertices_vector;
+     std::vector < GLfloat > texture_vector;
+     std::vector < GLfloat > normals_vector;
+     std::vector < GLuint > indices_vector;
+     utils::loadOBJ(t_file_path,vertices_vector,texture_vector,normals_vector,indices_vector);
+
+    /*for( GLfloat i : vertices_vector){
+        std::cout << i << std::endl;
+    }
+    std::cout << "-----" << std::endl;
+    for( GLfloat i : indices_vector){
+        std::cout << i << std::endl;
+    }
+    std::cout << "-----" << std::endl;
+    for( GLfloat i : texture_vector){
+        std::cout << i << std::endl;
+    }*/
+    return loadToVAO( vertices_vector, indices_vector, texture_vector );
+ }
 

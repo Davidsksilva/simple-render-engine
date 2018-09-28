@@ -1,6 +1,6 @@
 #include "static_shader.hpp"
 
-StaticShader::StaticShader() : ShaderProgram("source/data/shaders/vertexShader.glsl","source/data/shaders/fragmentShader.glsl"){
+StaticShader::StaticShader() : ShaderProgram("source/res/shaders/vertexShader.glsl","source/res/shaders/fragmentShader.glsl"){
 
     createProgram();
 }
