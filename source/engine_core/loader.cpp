@@ -1,13 +1,16 @@
 #include "loader.hpp"
 
-RawModel Loader::loadToVAO( const std::vector<GLfloat>& t_positionitions,const std::vector<GLuint>& t_indices, const std::vector<GLfloat>& t_texture_coordinates_vector){
+RawModel Loader::loadToVAO( const std::vector<GLfloat>& t_position,const std::vector<GLuint>& t_indices, 
+                            const std::vector<GLfloat>& t_texture_coordinates,const std::vector<GLfloat>& t_normals){
 
     // Create VAO
     GLuint vao_id = createVAO();
     bindIndicesBuffer(t_indices);
     // Store model positionitions on VAO 0
-    storeDataInAttributeList( 0, 3, t_positionitions );
-    storeDataInAttributeList( 1, 2, t_texture_coordinates_vector);
+    storeDataInAttributeList( 0, 3, t_position );
+    storeDataInAttributeList( 1, 2, t_texture_coordinates);
+    storeDataInAttributeList( 2, 3, t_normals);
+
     // Unbind
     unbindVAO();
     // Return RawModel
@@ -112,17 +115,7 @@ void Loader::bindIndicesBuffer( std::vector<GLuint> indices ){
      std::vector < GLuint > indices_vector;
      utils::loadOBJ(t_file_path,vertices_vector,texture_vector,normals_vector,indices_vector);
 
-    /*for( GLfloat i : vertices_vector){
-        std::cout << i << std::endl;
-    }
-    std::cout << "-----" << std::endl;
-    for( GLfloat i : indices_vector){
-        std::cout << i << std::endl;
-    }
-    std::cout << "-----" << std::endl;
-    for( GLfloat i : texture_vector){
-        std::cout << i << std::endl;
-    }*/
-    return loadToVAO( vertices_vector, indices_vector, texture_vector );
+
+    return loadToVAO( vertices_vector, indices_vector, texture_vector, normals_vector );
  }
 

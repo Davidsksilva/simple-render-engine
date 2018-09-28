@@ -1,6 +1,5 @@
 #include "includes/includes.hpp"
 #include "includes/utilities.hpp"
-
 #include "shaders/static_shader.hpp"
 #include "models/raw_model.hpp"
 #include "models/model_texture.hpp"
@@ -10,6 +9,7 @@
 #include "engine_core/loader.hpp"
 #include "engine_core/renderer.hpp"
 #include "engine_core/display.hpp"
+#include "engine_core/light.hpp"
 
 int main( void )
 {
@@ -25,6 +25,8 @@ int main( void )
     ModelTexture texture = ModelTexture( loader.loadTexture( "source/res/img/rock.png" ) );
     TexturedModel staticModel = TexturedModel(model,texture);
     Entity entity = Entity( staticModel, glm::vec3(0,0.0f,-2.0f), glm::vec3(0,0,0), 1.0f );
+    Light light = Light(glm::vec3(0,0,2), glm::vec3(1,1,1));
+    
     Camera camera = Camera();
     
     // Main Loop
@@ -34,7 +36,7 @@ int main( void )
         entity.increaseRotation(0,0.01f,0);
         renderer.prepare();
         shader.start();
-        
+        shader.loadLight(light);
         shader.loadViewMatrix( camera );
         renderer.render( entity, shader ); // erro aqui
 

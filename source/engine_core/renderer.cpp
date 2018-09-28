@@ -25,6 +25,7 @@ void Renderer::render( Entity t_entity, StaticShader  t_shader ){
     glBindVertexArray(raw_model .getVaoID() );
     glEnableVertexAttribArray( 0 );
     glEnableVertexAttribArray( 1 );
+    glEnableVertexAttribArray( 2 );
 
     glm::mat4 transformationMatrix = utils::createTransformationMatrix( t_entity.getPosition(), t_entity.getRotation(), t_entity.getScale() );
     t_shader.loadTransformationMatrix( transformationMatrix );
@@ -37,6 +38,7 @@ void Renderer::render( Entity t_entity, StaticShader  t_shader ){
     // Disable VBOs
     glDisableVertexAttribArray( 0 );
     glDisableVertexAttribArray( 1 );
+    glDisableVertexAttribArray( 2 );
     // Unbind VAO
     glBindVertexArray( 0 );
 

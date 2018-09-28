@@ -126,7 +126,9 @@ static void processVertex( std::vector < GLuint >& t_indices_vector,std::vector 
     }
 
 }
-bool utils::loadOBJ( const char* t_file_path, std::vector < GLfloat >& t_vertices_vector, std::vector < GLfloat >& t_texture_vector, std::vector < GLfloat >& t_normals_vector ,std::vector <GLuint>& t_indices_vector){
+bool utils::loadOBJ( const char* t_file_path, std::vector < GLfloat >& t_vertices_vector, 
+                    std::vector < GLfloat >& t_texture_vector, std::vector < GLfloat >& t_normals_vector ,
+                    std::vector <GLuint>& t_indices_vector){
 
 
     std::ifstream file_stream( t_file_path, std::ios::in );
