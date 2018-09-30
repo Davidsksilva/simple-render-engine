@@ -1,6 +1,6 @@
 #include "camera.hpp"
 
-Camera::Camera() : m_position(glm::vec3( 0, 0, 0 )){
+Camera::Camera() : m_position(glm::vec3( 0, 0, 0 )), m_yaw( 0.0f), m_pitch( 0.0f ){
 
 }
 

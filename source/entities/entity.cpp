@@ -1,11 +1,8 @@
 #include "entity.hpp"
 
-Entity::Entity( const TexturedModel t_model, const glm::vec3 t_position, const glm::vec3 t_rotation, const GLfloat t_scale ){
+Entity::Entity( const TexturedModel t_model, const glm::vec3 t_position, const glm::vec3 t_rotation, const GLfloat t_scale )
+            : m_model( t_model), m_position(t_position), m_rotation(t_rotation), m_scale(t_scale){
 
-    m_model = t_model;
-    m_position = t_position;
-    m_rotation = t_rotation;
-    m_scale = t_scale;
 }
 
 void Entity::increasePosition( const GLfloat t_dx, const GLfloat t_dy, const GLfloat t_dz ){

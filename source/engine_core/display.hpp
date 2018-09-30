@@ -5,6 +5,7 @@
 
 
 
+
 class Display{
 
     public:
@@ -14,6 +15,8 @@ class Display{
     static void create();
      
     static void update();
+
+    static bool pollEvent( sf::Event t_event );
 
     static void close();
 

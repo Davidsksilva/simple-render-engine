@@ -24,6 +24,9 @@ void StaticShader::getAllUniformLocations(){
     m_loc_view_matrix = getUniformLocation( "viewMatrix" );
     m_loc_light_color = getUniformLocation( "lightColor");
     m_loc_light_position = getUniformLocation( "lightPosition");
+    m_loc_light_intensity = getUniformLocation("lightIntensity");
+    m_loc_specular_intensity = getUniformLocation( "specularIntensity");
+    m_loc_specular_power = getUniformLocation( "specularPower");
 }
 
 void StaticShader::loadTransformationMatrix( const glm::mat4 t_matrix ){
@@ -46,4 +49,11 @@ void StaticShader::loadLight( Light t_light ){
 
     loadVector( m_loc_light_color, t_light.getColor());
     loadVector( m_loc_light_position, t_light.getPosition());
+    loadFloat( m_loc_light_intensity, t_light.getIntensity());
+}
+
+void StaticShader::loadSpecular( ModelTexture t_model_texture ){
+    
+    loadFloat( m_loc_specular_intensity, t_model_texture.getSpecularIntensity());
+    loadFloat( m_loc_specular_power, t_model_texture.getSpecularPower());
 }

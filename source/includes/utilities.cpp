@@ -202,7 +202,7 @@ bool utils::loadOBJ( const char* t_file_path, std::vector < GLfloat >& t_vertice
 
         }
     }
-
+    file_stream.close();
     return true;
 
 }

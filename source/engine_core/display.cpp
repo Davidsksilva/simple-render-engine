@@ -17,6 +17,7 @@ void Display::create(){
     m_window = std::make_unique<sf::RenderWindow>( sf::VideoMode(kWIDTH,kHEIGHT), "OpenGL", sf::Style::Default, settings );
     // Setting framerate limit
     m_window->setFramerateLimit( 60 );
+    m_window->setVerticalSyncEnabled( true );
 
     // Initialize glew
     glewInit();
@@ -53,19 +54,23 @@ bool Display::isOpen(){
     // Return if the  window is open
     return m_window->isOpen();
 }
+bool Display::pollEvent( sf::Event t_event ){
 
+    return m_window->pollEvent( t_event );
+}
 void Display::checkForClose(){
     
     sf::Event evnt;
 
     // Checking window events
     while( m_window->pollEvent( evnt ) ){
-
         //Check if event is closing
         if( evnt.type == sf::Event::Closed ){
             m_window->close();
         }
     }
+
+
 }
 
 

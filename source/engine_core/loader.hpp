@@ -19,13 +19,15 @@ class Loader{
 
     void cleanUp();
 
+
     private:
 
     std::vector<GLuint> m_vaos;
     std::vector<GLuint> m_vbos;
     std::vector<GLuint> m_textures;
-
     GLuint createVAO();
+
+
 
     void storeDataInAttributeList( const GLuint t_attribute_number, const GLuint t_size, const std::vector<GLfloat>& t_data );
 
