@@ -3,7 +3,7 @@ CXXFLAGS = -g -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
 SOURCEDIR = source
 BUILDIR = build
 
-LIBS = -lGLEW -lsfml-graphics -lsfml-window -lsfml-system -lGL -std=c++11
+LIBS = -lGLEW -lsfml-graphics -lsfml-window -lsfml-system -lGL -std=c++11 
 
 EXECUTABLE= run
 

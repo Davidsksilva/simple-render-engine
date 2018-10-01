@@ -9,12 +9,12 @@ TexturedModel::TexturedModel( const RawModel t_model, const ModelTexture t_textu
     m_texture = t_texture;
 }
 
-RawModel TexturedModel::getRawModel(){
+RawModel TexturedModel::getRawModel() const {
 
     return m_raw_model;
 }
 
-ModelTexture TexturedModel::getTexture(){
+ModelTexture TexturedModel::getTexture() const{
 
     return m_texture;
 }

@@ -26,6 +26,8 @@ void Display::create(){
     glViewport( 0, 0, kWIDTH, kHEIGHT );
 
     glEnable    ( GL_DEPTH_TEST );
+    glEnable    ( GL_CULL_FACE  );
+    glCullFace  ( GL_BACK );
 }
 
 void Display::update(){

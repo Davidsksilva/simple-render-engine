@@ -17,8 +17,11 @@ class TexturedModel{
     TexturedModel();
     TexturedModel( const RawModel t_model, const ModelTexture t_texture );
 
-    RawModel getRawModel();
-    ModelTexture getTexture();
+    RawModel getRawModel() const;
+    ModelTexture getTexture() const;
+    bool operator<(const TexturedModel& other) const{
+        return m_texture.getID() < other.getTexture().getID();
+    }
 
 };
 

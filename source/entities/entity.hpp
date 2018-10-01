@@ -20,7 +20,7 @@ class Entity{
     void increasePosition( const GLfloat t_dx, const GLfloat t_dy, const GLfloat t_dz );
     void increaseRotation( const GLfloat t_dx, const GLfloat t_dy, const GLfloat t_dz );
 
-    TexturedModel getModel();
+    TexturedModel getModel() const;
     void setModel( const TexturedModel t_model );
 
     glm::vec3 getPosition();

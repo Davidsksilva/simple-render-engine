@@ -19,8 +19,7 @@ void Entity::increaseRotation( const GLfloat t_dx, const GLfloat t_dy, const GLf
     m_rotation.z += t_dz;
 }
 
-
-TexturedModel Entity::getModel(){
+TexturedModel Entity::getModel() const {
 
     return m_model;
 }

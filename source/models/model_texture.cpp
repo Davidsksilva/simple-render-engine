@@ -9,7 +9,7 @@ ModelTexture::ModelTexture() : m_texture_id ( 0 ){
 
 }
 
-GLuint ModelTexture::getID(){
+GLuint ModelTexture::getID() const{
 
     return m_texture_id;
 }

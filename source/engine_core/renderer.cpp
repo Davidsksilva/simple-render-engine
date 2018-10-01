@@ -2,6 +2,7 @@
 
 Renderer::Renderer( StaticShader t_shader, GLfloat t_r, GLfloat t_g, GLfloat t_b  ){
 
+    m_shader = t_shader;
     m_background_color.x = t_r;
     m_background_color.y = t_g;
     m_background_color.z = t_b;
@@ -15,51 +16,19 @@ void Renderer::prepare(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // Set Background Color
-    glClearColor(m_background_color.x, m_background_color.y, m_background_color.z, 1);
-
+    
+    glClearColor(1, 1, 1, 1);
     glEnable    ( GL_DEPTH_TEST );
 
-    
-    
 }
 
 void Renderer::clear(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // Set Background Color
-    glClearColor(1, 1, 1, 1);
+    glClearColor(m_background_color.x, m_background_color.y, m_background_color.z, 1);
 
     glEnable    ( GL_DEPTH_TEST );
-
-
-    
-}
-
-void Renderer::render( Entity t_entity, StaticShader  t_shader ){
-
-    TexturedModel model = t_entity.getModel();
-    RawModel raw_model  = model.getRawModel();
-
-    // Bind VAO and VBOS ( Position, Texture)
-    glBindVertexArray(raw_model .getVaoID() );
-    glEnableVertexAttribArray( 0 );
-    glEnableVertexAttribArray( 1 );
-    glEnableVertexAttribArray( 2 );
-
-    glm::mat4 transformationMatrix = utils::createTransformationMatrix( t_entity.getPosition(), t_entity.getRotation(), t_entity.getScale() );
-    t_shader.loadTransformationMatrix( transformationMatrix );
-    ModelTexture texture = model.getTexture();
-    t_shader.loadSpecular(texture);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture( GL_TEXTURE_2D, model.getTexture().getID());
-    // Draw Triangles using Index Buffers
-    glDrawElements( GL_TRIANGLES,raw_model .getVertexCount(), GL_UNSIGNED_INT, 0 );
-    // Disable VBOs
-    glDisableVertexAttribArray( 0 );
-    glDisableVertexAttribArray( 1 );
-    glDisableVertexAttribArray( 2 );
-    // Unbind VAO
-    glBindVertexArray( 0 );
 
 }
 
@@ -76,27 +45,67 @@ void Renderer::setBackgroundColor ( GLfloat t_r, GLfloat t_g, GLfloat t_b ){
     m_background_color.z = t_b;
 }
 
-GLuint Renderer::createFBO(){
+void Renderer::render( std::map< TexturedModel, std::vector < Entity>> t_entities ){
 
-     GLuint fbo_id;
-     glGenFramebuffers(1, &fbo_id);
-     glBindFramebuffer( GL_FRAMEBUFFER, fbo_id );
+    for( auto const& [model, entities] : t_entities){
+
+        prepareTexturedModel(model);
+        for( Entity entity : entities){
+            prepareInstance(entity);
+            glDrawElements( GL_TRIANGLES,model.getRawModel().getVertexCount(), GL_UNSIGNED_INT, 0 );
+        }
+        unbindTexturedModel();
+    }
+
+}
+
+void Renderer::prepareTexturedModel ( TexturedModel t_model ){
+
+    RawModel raw_model  = t_model.getRawModel();
+
+    // Bind VAO and VBOS ( Position, Texture)
+    glBindVertexArray(raw_model .getVaoID() );
+    glEnableVertexAttribArray( 0 );
+    glEnableVertexAttribArray( 1 );
+    glEnableVertexAttribArray( 2 );
+    ModelTexture texture = t_model.getTexture();
+    m_shader.loadSpecular(texture);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture( GL_TEXTURE_2D, t_model.getTexture().getID());
+}
+
+void Renderer::unbindTexturedModel(){
+
+    // Disable VBOs
+    glDisableVertexAttribArray( 0 );
+    glDisableVertexAttribArray( 1 );
+    glDisableVertexAttribArray( 2 );
+    // Unbind VAO
+    glBindVertexArray( 0 );
+
+}
+
+void Renderer::prepareInstance( Entity t_entity){
+
+    glm::mat4 transformationMatrix = utils::createTransformationMatrix( t_entity.getPosition(), t_entity.getRotation(), t_entity.getScale() );
+    m_shader.loadTransformationMatrix( transformationMatrix );
+}
+GLuint Renderer::createFBO(){
+    
+    GLuint fbo;
+    glGenFramebuffers(1, &fbo);
+    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
 
     
 
-     GLuint texture;
-     glGenTextures(1,&texture);
-     glBindTexture( GL_TEXTURE_2D, texture );
+    GLuint texture;
+    glGenTextures(1,&texture);
+    glBindTexture( GL_TEXTURE_2D, texture );
 
     glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 512, 512,0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
-     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-     /*glTexImage2D( 
-        GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, 512, 512, 0, 
-        GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL
-        );*/
-    //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, texture, 0);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
     GLuint rbo;
     glGenRenderbuffers(1, &rbo);
@@ -106,7 +115,8 @@ GLuint Renderer::createFBO(){
     glFramebufferRenderbuffer( GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
     fbo_texture = texture;
-    m_fbo = fbo_id;
+    m_fbo = fbo;
+    m_rbo = rbo;
  }
 
  void Renderer:: bindFBO(){
@@ -122,6 +132,7 @@ GLuint Renderer::createFBO(){
  void Renderer::deleteFBO(){
 
      glDeleteFramebuffers(1, &m_fbo);
+     glDeleteRenderbuffers(1, &m_rbo);
  }
 
     

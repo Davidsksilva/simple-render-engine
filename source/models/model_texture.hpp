@@ -13,7 +13,7 @@ class ModelTexture{
     ModelTexture();
     ModelTexture( const GLuint t_id , const GLfloat t_specular_power, const GLfloat t_specular_intensity);
 
-    GLuint getID();
+    GLuint getID() const;
 
     void setSpecularPower( GLfloat t_value );
     GLfloat getSpecularPower();
