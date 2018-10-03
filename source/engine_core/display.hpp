@@ -2,7 +2,7 @@
 #define DISPLAY_HPP
 
 #include "../includes/includes.hpp"
-
+#include "../imgui/imgui-SFML.h"
 
 
 

@@ -66,6 +66,7 @@ void Display::checkForClose(){
 
     // Checking window events
     while( m_window->pollEvent( evnt ) ){
+        ImGui::SFML::ProcessEvent(evnt);
         //Check if event is closing
         if( evnt.type == sf::Event::Closed ){
             m_window->close();
