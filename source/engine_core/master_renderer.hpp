@@ -17,16 +17,18 @@ class MasterRenderer{
 
     StaticShader m_shader;
     Renderer m_renderer;
+    Light& m_light;
     std::map < TexturedModel, std::vector< Entity >> m_entities;
-
 
     public:
 
-    MasterRenderer( StaticShader t_shader, GLfloat t_r, GLfloat t_g, GLfloat t_b );
+    MasterRenderer( StaticShader t_shader,Light& t_light,  GLfloat t_r, GLfloat t_g, GLfloat t_b );
     void render( Light t_light, Camera t_camera );
     void renderFBO( Light t_light, Camera t_camera );
     void processEntity( const Entity t_entity );
     void setBackgroundColor( GLfloat t_r, GLfloat t_g, GLfloat t_b );
+    void setLightIntensity( GLfloat t_value );
+    void setLightColor( glm::vec3 t_value );
     void cleanUp();
     GLuint getTextureFBO();
 

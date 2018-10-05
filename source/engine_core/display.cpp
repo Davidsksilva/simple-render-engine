@@ -1,46 +1,89 @@
 #include "display.hpp"
 
 // Creating static pointer to the window
-std::unique_ptr<sf::RenderWindow> Display::m_window;
+GLFWwindow* Display::window;
 
-void Display::create(){
+static void glfw_error_callback(int error, const char* description)
+{
+    fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+}
 
-    sf::ContextSettings settings;
 
-    settings.depthBits = 24;
-    settings.stencilBits = 8;
-    settings.antialiasingLevel = 4;
-    settings.majorVersion = 3;
-    settings.minorVersion = 0;
+int Display::create(GLuint t_w, GLuint t_h, const char * t_title){
 
-    // Creating the window
-    m_window = std::make_unique<sf::RenderWindow>( sf::VideoMode(kWIDTH,kHEIGHT), "OpenGL", sf::Style::Default, settings );
-    // Setting framerate limit
-    m_window->setFramerateLimit( 60 );
-    m_window->setVerticalSyncEnabled( true );
+    // Setup window
+    glfwSetErrorCallback(glfw_error_callback);
+    if (!glfwInit())
+        return 1;
 
-    // Initialize glew
-    glewInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-    // Set Viewport
-    glViewport( 0, 0, kWIDTH, kHEIGHT );
 
+    // Create window with graphics context
+    window = glfwCreateWindow(t_w, t_h,t_title, NULL, NULL);
+    if (window == NULL)
+        return 1;
+    //glfwSetWindowAspectRatio(window, 1, 1);
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1); // Enable vsync
     glEnable    ( GL_DEPTH_TEST );
     glEnable    ( GL_CULL_FACE  );
     glCullFace  ( GL_BACK );
+
+
+    // Initialize OpenGL loader
+
+    bool err = glewInit() != GLEW_OK;
+
+    if (err)
+    {
+        fprintf(stderr, "Failed to initialize OpenGL loader!\n");
+        return 1;
+    }
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 130");
+
+     // Setup style
+    ImGui::GetStyle().WindowRounding = 0.0f;
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsClassic();
+    //ImGui::StyleColorsLight();
+
 }
 
 void Display::update(){
-
-    // Updating the window
-    m_window->display();
+        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        int display_w, display_h;
+        glfwMakeContextCurrent(window);
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        glfwMakeContextCurrent(window);
+        glfwPollEvents();
+        glfwSwapBuffers(window);
 
 }
 
 void Display::close(){
-
-    // Close the window
-    m_window->close();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    glfwDestroyWindow(window);
+    glfwTerminate();
 }
 
 void Display::clear( const GLfloat t_r, const GLfloat t_g, const GLfloat t_b ){
@@ -54,27 +97,6 @@ void Display::clear( const GLfloat t_r, const GLfloat t_g, const GLfloat t_b ){
 bool Display::isOpen(){
 
     // Return if the  window is open
-    return m_window->isOpen();
+    return !glfwWindowShouldClose(Display::window);
 }
-bool Display::pollEvent( sf::Event t_event ){
-
-    return m_window->pollEvent( t_event );
-}
-void Display::checkForClose(){
-    
-    sf::Event evnt;
-
-    // Checking window events
-    while( m_window->pollEvent( evnt ) ){
-        ImGui::SFML::ProcessEvent(evnt);
-        //Check if event is closing
-        if( evnt.type == sf::Event::Closed ){
-            m_window->close();
-        }
-    }
-
-
-}
-
-
 

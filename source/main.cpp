@@ -11,22 +11,26 @@
 #include "engine_core/master_renderer.hpp"
 #include "engine_core/display.hpp"
 #include "engine_core/light.hpp"
-#include "interface/interface.hpp"
 #include "imgui/imgui.h"
-#include "imgui/imgui-SFML.h"
-#include <SFML/System/Clock.hpp>
-#include <SFML/Window/Event.hpp>
-//#define ImGuiConfigFlags_DockingEnable 1<< 6
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
+#include "interface/interface.hpp"
+#include <stdio.h>
 
-int main( void )
+#include <GL/glew.h>    // Initialize with glewInit()
+
+#include <GLFW/glfw3.h> // Include glfw3.h after our OpenGL definitions
+
+static void glfw_error_callback(int error, const char* description)
 {
+    fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+}
 
-    Display::create();
-    Display::clear(1.0f, 1.0f, 1.0f);
-
-    ImGui::SFML::Init(*Display::m_window);
-
+int main(int, char**)
+{
     
+    Display::create(1920,1080,"Simon Engine");
+
     Loader loader = Loader();
     StaticShader shader = StaticShader();
 
@@ -38,33 +42,46 @@ int main( void )
     Light light = Light(glm::vec3(200.0f,200.0f,100.0f), glm::vec3(1.0f,1.0f,1.0f), 0.2f);
     Camera camera = Camera();
 
-    MasterRenderer master_renderer = MasterRenderer( shader, 0.0f, 0.0f, 0.0f);
-    sf::Clock deltaClock;
-    UserInterface user_interface = UserInterface(master_renderer, deltaClock);
-  
+    std::vector <Entity*> entities;
+    //entities.push_back(&entity);
+
+    MasterRenderer master_renderer = MasterRenderer( shader,light, 0.0f, 0.0f, 0.0f);
+
+    UserInterface user_interface = UserInterface(master_renderer);
+    //user_interface.loadStyle();
+
+
+    bool show_demo_window = true;
+    bool show_another_window = false;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    float color[3] = {0.0f,0.0f,0.0f};
 
     
-    bool show_demo_window = false;
-    while(Display::isOpen()){
-        
-        // entity.increasePosition(0,0,-0.1f);
+
+    // Main loop
+    while (!glfwWindowShouldClose(Display::window))
+    {
+         // entity.increasePosition(0,0,-0.1f);
         glViewport( 0, 0, 512, 512);
-        //camera.move();
-        entity.increaseRotation(0,0.01f,0);
-        master_renderer.processEntity(entity);
-        //master_renderer.render(light, camera);
+        camera.move();
+        //entity.increaseRotation(0,0.01f,0);
+        //std::cout << entities.size() << std::endl;
+        for( Entity* ent : entities){
+            master_renderer.processEntity(*ent);
+        }
         master_renderer.renderFBO(light, camera );
-    
-        user_interface.startInterface();
-        
+
+        user_interface.startInterface(entities);
+
         Display::update();
         
-        Display::checkForClose();
     }
-
 
     shader.cleanUp();
     master_renderer.cleanUp();
-    ImGui::SFML::Shutdown();
+    Display::close();
+    for( Entity* ent : entities){
+        delete ent;
+    }
     return 0;
 }

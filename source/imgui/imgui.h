@@ -797,7 +797,13 @@ enum ImGuiDockNodeFlags_
 {
     ImGuiDockNodeFlags_None                         = 0,
     ImGuiDockNodeFlags_KeepAliveOnly                = 1 << 0,   // Don't display the dockspace node but keep it alive. Windows docked into this dockspace node won't be undocked.
-    ImGuiDockNodeFlags_NoSplit                      = 1 << 1    // Disable splitting the node into smaller nodes. Useful e.g. when embedding dockspaces into a main root one (the root one may have splitting disableed to reduce confusion)
+    ImGuiDockNodeFlags_NoSplit                      = 1 << 1,   // Disable splitting the node into smaller nodes. Useful e.g. when embedding dockspaces into a main root one (the root one may have splitting disabled to reduce confusion)
+    //ImGuiDockNodeFlags_NoCentralNode              = 1 << 2,   // Disable Central Node (the node which can stay empty)
+    //ImGuiDockNodeFlags_NoOuterBorder              = 1 << 3,   // Disable outer border on a DockSpace() node.
+    ImGuiDockNodeFlags_NoDockingInCentralNode       = 1 << 4,   // Disable docking inside the Central Node, which will be always kept empty.
+    ImGuiDockNodeFlags_PassthruInEmptyNodes         = 1 << 5,   // When Central Node is empty: let inputs pass-through + won't display a DockingEmptyBg background.
+    ImGuiDockNodeFlags_RenderWindowBg               = 1 << 6,   // DockSpace() will render a ImGuiCol_WindowBg background covering everything excepted the Central Node (when empty). Meaning the host window should properly use SetNextWindowBgAlpha(0.0f) + ImGuiDockNodeFlags_NoOuterBorder prior to Begin() when using this.
+    ImGuiDockNodeFlags_PassthruDockspace            = ImGuiDockNodeFlags_NoDockingInCentralNode | ImGuiDockNodeFlags_RenderWindowBg | ImGuiDockNodeFlags_PassthruInEmptyNodes
 };
 
 // Flags for ImGui::IsWindowFocused()
@@ -1015,7 +1021,7 @@ enum ImGuiCol_
     ImGuiCol_TabUnfocused,
     ImGuiCol_TabUnfocusedActive,
     ImGuiCol_DockingPreview,
-    ImGuiCol_DockingBg,             // Empty node
+    ImGuiCol_DockingEmptyBg,        // Background color for empty node (e.g. CentralNode with no window docked into it)
     ImGuiCol_PlotLines,
     ImGuiCol_PlotLinesHovered,
     ImGuiCol_PlotHistogram,

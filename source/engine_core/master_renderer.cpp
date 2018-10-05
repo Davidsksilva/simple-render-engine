@@ -1,7 +1,7 @@
 #include "master_renderer.hpp"
 
-MasterRenderer::MasterRenderer(  StaticShader t_shader, GLfloat t_r, GLfloat t_g, GLfloat t_b ) 
-: m_shader(t_shader), m_renderer (Renderer(t_shader, t_r, t_g, t_b)){
+MasterRenderer::MasterRenderer(  StaticShader t_shader, Light& t_light, GLfloat t_r, GLfloat t_g, GLfloat t_b ) 
+: m_shader(t_shader), m_renderer (Renderer(t_shader, t_r, t_g, t_b)), m_light(t_light){
 
     m_renderer.createFBO();
 }
@@ -10,7 +10,7 @@ void MasterRenderer::render( Light t_light, Camera t_camera ){
 
     m_renderer.prepare();
     m_shader.start();
-    m_shader.loadLight( t_light );
+    m_shader.loadLight( m_light );
     m_shader.loadViewMatrix(  t_camera );
     m_renderer.render(m_entities);
     m_shader.stop();
@@ -23,7 +23,7 @@ void MasterRenderer::renderFBO( Light t_light, Camera t_camera ){
     m_renderer.bindFBO();
     m_renderer.prepare();
     m_shader.start();
-    m_shader.loadLight( t_light );
+    m_shader.loadLight( m_light );
     m_shader.loadViewMatrix(  t_camera );
     m_renderer.render(m_entities);
     m_renderer.unbindFBO();
@@ -32,6 +32,15 @@ void MasterRenderer::renderFBO( Light t_light, Camera t_camera ){
 
 }
 
+void MasterRenderer::setLightIntensity( GLfloat t_value ){
+
+    m_light.setIntensity(t_value);
+}
+
+void MasterRenderer::setLightColor( glm::vec3 t_value ){
+
+    m_light.setColor(t_value);
+}
 GLuint MasterRenderer::getTextureFBO(){
 
     return m_renderer.fbo_texture;
