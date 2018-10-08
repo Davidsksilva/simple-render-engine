@@ -102,3 +102,14 @@ void MasterRenderer::setCameraYaw( GLfloat t_yaw ){
 
     m_camera.setYaw(t_yaw);
 }
+
+void MasterRenderer::setLightPosition( glm::vec3 t_position){
+
+    m_light.setPosition(t_position);
+}
+
+glm::vec3 MasterRenderer::getLightPosition(){
+
+    return m_light.getPosition();
+}
+

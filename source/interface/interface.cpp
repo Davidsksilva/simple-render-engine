@@ -243,6 +243,13 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
             ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Directional Light:");
             ImGui::Spacing();
             static float f1 = 0.2f;
+            static float vec3f_light_position[3] = {1.0f,1.0f,1.0f};
+
+            vec3f_light_position[0] = m_master_renderer.getLightPosition().x;
+            vec3f_light_position[1] = m_master_renderer.getLightPosition().y;
+            vec3f_light_position[2] = m_master_renderer.getLightPosition().z;
+
+
             ImGui::Text("Intensity");
             ImGui::SameLine(150); ImGui::DragFloat("##lightintensity", &f1, 0.005f,0.0f,1.0f);
             m_master_renderer.setLightIntensity(f1);
@@ -251,6 +258,11 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
             if (ImGui::ColorEdit3("##lightcolor",m_light_color)) {
                 m_master_renderer.setLightColor(glm::vec3(m_light_color[0],m_light_color[1],m_light_color[2]));
             }
+            ImGui::Text("Position");
+            ImGui::SameLine(150);
+            ImGui::DragFloat3("##LightPosition", vec3f_light_position,0.01f);
+            m_master_renderer.setLightPosition(glm::vec3(vec3f_light_position[0],vec3f_light_position[1],vec3f_light_position[2]));
+
 
             ImGui::Separator();
             static float vec3f_camera_position[3] = { 1.0f, 1.0f, 1.0f};

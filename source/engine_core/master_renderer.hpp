@@ -30,6 +30,8 @@ class MasterRenderer{
     void setBackgroundColor( GLfloat t_r, GLfloat t_g, GLfloat t_b );
     void setLightIntensity( GLfloat t_value );
     void setLightColor( glm::vec3 t_value );
+    void setLightPosition( glm::vec3 t_position);
+    glm::vec3 getLightPosition();
     glm::vec3 getCameraPosition();
     void setCameraPosition( glm::vec3 t_position );
     GLfloat getCameraPitch();
