@@ -346,8 +346,8 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
            
             ImGui::End();
         }
-       if (m_show_demo_window)
-            ImGui::ShowDemoWindow(&m_show_demo_window);  
+       //if (m_show_demo_window)
+            //ImGui::ShowDemoWindow(&m_show_demo_window);  
         ImGui::Render(); 
 }
 
