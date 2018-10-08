@@ -1,7 +1,7 @@
 #include "master_renderer.hpp"
 
-MasterRenderer::MasterRenderer(  StaticShader t_shader, Light& t_light, GLfloat t_r, GLfloat t_g, GLfloat t_b ) 
-: m_shader(t_shader), m_renderer (Renderer(t_shader, t_r, t_g, t_b)), m_light(t_light){
+MasterRenderer::MasterRenderer(  StaticShader t_shader, Light& t_light, Camera& t_camera, GLfloat t_r, GLfloat t_g, GLfloat t_b ) 
+: m_shader(t_shader), m_renderer (Renderer(t_shader, t_r, t_g, t_b)), m_light(t_light), m_camera(t_camera){
 
     m_renderer.createFBO();
 }
@@ -11,7 +11,7 @@ void MasterRenderer::render( Light t_light, Camera t_camera ){
     m_renderer.prepare();
     m_shader.start();
     m_shader.loadLight( m_light );
-    m_shader.loadViewMatrix(  t_camera );
+    m_shader.loadViewMatrix(  m_camera );
     m_renderer.render(m_entities);
     m_shader.stop();
     m_entities.clear();
@@ -24,7 +24,7 @@ void MasterRenderer::renderFBO( Light t_light, Camera t_camera ){
     m_renderer.prepare();
     m_shader.start();
     m_shader.loadLight( m_light );
-    m_shader.loadViewMatrix(  t_camera );
+    m_shader.loadViewMatrix(  m_camera );
     m_renderer.render(m_entities);
     m_renderer.unbindFBO();
     m_shader.stop();
@@ -71,4 +71,34 @@ void MasterRenderer::cleanUp(){
 void MasterRenderer::setBackgroundColor ( GLfloat t_r, GLfloat t_g, GLfloat t_b ){
 
     m_renderer.setBackgroundColor(t_r,t_g,t_b);
+}
+
+glm::vec3 MasterRenderer::getCameraPosition(){
+
+    return m_camera.getPosition();
+}
+
+void MasterRenderer::setCameraPosition( glm::vec3 t_position ){
+
+    m_camera.setPosition(t_position);
+}
+
+GLfloat MasterRenderer::getCameraPitch(){
+
+    return m_camera.getPitch();
+}
+
+void MasterRenderer::setCameraPitch( GLfloat t_pitch ){
+
+    m_camera.setPitch(t_pitch);
+}
+
+GLfloat MasterRenderer::getCameraYaw(){
+
+    return m_camera.getYaw();
+}
+
+void MasterRenderer::setCameraYaw( GLfloat t_yaw ){
+
+    m_camera.setYaw(t_yaw);
 }

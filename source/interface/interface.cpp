@@ -230,23 +230,54 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
         ImGui::PopStyleVar();
         ImGui::End();
         ImGui::Begin("Scene Properties");
-        
+            ImGui::PushItemWidth(300);
+            ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Background:");
+            ImGui::Spacing();
             ImGui::Text("Background Color");
-            if (ImGui::ColorEdit3("Color", m_color)) {
+            ImGui::SameLine(150);
+            if (ImGui::ColorEdit3("##backgroundcolor", m_color)) {
                 m_master_renderer.setBackgroundColor( m_color[0], m_color[1], m_color[2] );
             }
             ImGui::Separator();
-            ImGui::Text("Directional Light");
+
+            ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Directional Light:");
+            ImGui::Spacing();
             static float f1 = 0.2f;
             ImGui::Text("Intensity");
-            ImGui::SameLine(); ImGui::DragFloat("drag float", &f1, 0.005f,0.0f,1.0f);
+            ImGui::SameLine(150); ImGui::DragFloat("##lightintensity", &f1, 0.005f,0.0f,1.0f);
             m_master_renderer.setLightIntensity(f1);
             ImGui::Text("Light color");
-            ImGui::SameLine();
-            if (ImGui::ColorEdit3("Light color",m_light_color)) {
+            ImGui::SameLine(150);
+            if (ImGui::ColorEdit3("##lightcolor",m_light_color)) {
                 m_master_renderer.setLightColor(glm::vec3(m_light_color[0],m_light_color[1],m_light_color[2]));
             }
 
+            ImGui::Separator();
+            static float vec3f_camera_position[3] = { 1.0f, 1.0f, 1.0f};
+            static float vec2f_camera_rotation[2] = { 1.0f, 1.0f};
+
+            vec3f_camera_position[0] = m_master_renderer.getCameraPosition().x;
+            vec3f_camera_position[1] = m_master_renderer.getCameraPosition().y;
+            vec3f_camera_position[2] = m_master_renderer.getCameraPosition().z;
+            vec2f_camera_rotation[0] = m_master_renderer.getCameraPitch();
+            vec2f_camera_rotation[1] = m_master_renderer.getCameraYaw();
+
+            ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Camera:");
+            ImGui::Spacing();
+            ImGui::Text("Position");
+            ImGui::SameLine(150);
+            ImGui::DragFloat3("##Position", vec3f_camera_position,0.01f);
+            m_master_renderer.setCameraPosition(glm::vec3(vec3f_camera_position[0],vec3f_camera_position[1],vec3f_camera_position[2]));
+
+            ImGui::Text("Pitch");
+            ImGui::SameLine(150);
+            ImGui::DragFloat("##Pitch", &vec2f_camera_rotation[0],0.01f);
+            m_master_renderer.setCameraPitch(vec2f_camera_rotation[0]);
+
+            ImGui::Text("Yaw");
+            ImGui::SameLine(150);
+            ImGui::DragFloat("##Yaw", &vec2f_camera_rotation[1],0.01f);
+            m_master_renderer.setCameraYaw(vec2f_camera_rotation[1]);
 
         ImGui::End();
          {
@@ -254,22 +285,58 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
             static int counter = 0;
             static float vec3f_entity_position[3] = { 0.0f, -1.0f, -1.0f};
             static float vec3f_entity_rotation[3] = { 0.0f, 0.0f, 0.0f};
+            static float vec3f_entity_scale[3] = { 1.0f, 1.0f, 1.0f};
+            static std::vector <std::array<float,3>> vec3f_entitites_position;
+            static std::vector <std::array<float,3>> vec3f_entitites_rotation;
+            static std::vector  <std::array<float,3>> vec3f_entitites_scale;
+
+            vec3f_entitites_scale.resize(t_entities.size());
+            vec3f_entitites_position.resize(t_entities.size());
+            vec3f_entitites_rotation.resize(t_entities.size());
             static float f_scale=1.00f;
             static bool checkRotationLoop = false;
             static glm::vec3 entity_position;
-            
+            for(int i = 0;i < vec3f_entitites_position.size();i++){
+                if(selected != -1 && selected == i){
+                    vec3f_entitites_position[i][0] = t_entities[i]->getPosition().x;
+                    vec3f_entitites_position[i][1] = t_entities[i]->getPosition().y;
+                    vec3f_entitites_position[i][2] = t_entities[i]->getPosition().z;
+                    vec3f_entitites_rotation[i][0] = t_entities[i]->getRotation().x;
+                    vec3f_entitites_rotation[i][1] = t_entities[i]->getRotation().y;
+                    vec3f_entitites_rotation[i][2] = t_entities[i]->getRotation().z;
+                    vec3f_entitites_scale[i][0]    = t_entities[i]->getScale().x;
+                    vec3f_entitites_scale[i][1]    = t_entities[i]->getScale().y;
+                    vec3f_entitites_scale[i][2]    = t_entities[i]->getScale().z;
+                }
+            }
             
             ImGui::Begin("Inspector");                          // Create a window called "Hello, world!" and append into it.
             if(selected != -1){
+
                 ImGui::Text("Entity %d",selected );               // Display some text (you can use a format strings too)
+                vec3f_entity_position[0] = vec3f_entitites_position[selected][0];
+                vec3f_entity_position[1] = vec3f_entitites_position[selected][1];
+                vec3f_entity_position[2] = vec3f_entitites_position[selected][2];
+
                 ImGui::DragFloat3("Position", vec3f_entity_position,0.01f);
-                t_entities[selected]->setPosition(glm::vec3(vec3f_entity_position[0],vec3f_entity_position[1],vec3f_entity_position[2]));
+                t_entities[selected]->setPosition(glm::vec3( vec3f_entity_position[0], vec3f_entity_position[1], vec3f_entity_position[2]));
+
+                vec3f_entity_rotation[0] = vec3f_entitites_rotation[selected][0];
+                vec3f_entity_rotation[1] = vec3f_entitites_rotation[selected][1];
+                vec3f_entity_rotation[2] =vec3f_entitites_rotation[selected][2];
+
                 ImGui::DragFloat3("Rotation", vec3f_entity_rotation,0.01f);
                 if(!checkRotationLoop){
                     t_entities[selected]->setRotation(glm::vec3(vec3f_entity_rotation[0],vec3f_entity_rotation[1],vec3f_entity_rotation[2]));
                 }
-                ImGui::DragFloat("Scale", &f_scale, 0.005f);
-                t_entities[selected]->setScale(f_scale);
+
+                vec3f_entity_scale[0] = vec3f_entitites_scale[selected][0];
+                vec3f_entity_scale[1] = vec3f_entitites_scale[selected][1];
+                vec3f_entity_scale[2] = vec3f_entitites_scale[selected][2];
+
+                ImGui::DragFloat3("Scale", vec3f_entity_scale,0.01f);
+                t_entities[selected]->setScale(glm::vec3( vec3f_entity_scale[0], vec3f_entity_scale[1], vec3f_entity_scale[2]));
+
                 ImGui::Checkbox("Rotation Loop", &checkRotationLoop);
                 if(checkRotationLoop){
 
@@ -279,8 +346,8 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
            
             ImGui::End();
         }
-       // if (m_show_demo_window)
-           // ImGui::ShowDemoWindow(&m_show_demo_window);  
+       if (m_show_demo_window)
+            ImGui::ShowDemoWindow(&m_show_demo_window);  
         ImGui::Render(); 
 }
 

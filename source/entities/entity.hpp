@@ -11,7 +11,7 @@ class Entity{
     TexturedModel m_model;
     glm::vec3 m_position;
     glm::vec3 m_rotation;
-    GLfloat m_scale;
+    glm::vec3 m_scale;
 
     public:
 
@@ -30,7 +30,7 @@ class Entity{
     void setRotation( const glm::vec3 t_rotation );
 
     glm::vec3 getScale();
-    void setScale( const GLfloat t_scale );
+    void setScale( const glm::vec3 t_scale );
 
 
 

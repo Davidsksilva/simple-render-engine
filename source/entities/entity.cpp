@@ -51,10 +51,13 @@ void Entity::setRotation(glm::vec3 rotation){
 
 glm::vec3 Entity::getScale(){
 
-    return glm::vec3( m_scale, m_scale, m_scale);
+    return m_scale;
 }
 
-void Entity::setScale(GLfloat scale){
+void Entity::setScale(glm::vec3 scale){
 
-    m_scale = scale;
+
+    m_scale.x = scale.x;
+    m_scale.y = scale.y;
+    m_scale.z = scale.z;
 }

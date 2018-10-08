@@ -45,7 +45,7 @@ int main(int, char**)
     std::vector <Entity*> entities;
     //entities.push_back(&entity);
 
-    MasterRenderer master_renderer = MasterRenderer( shader,light, 0.0f, 0.0f, 0.0f);
+    MasterRenderer master_renderer = MasterRenderer( shader,light,camera, 0.0f, 0.0f, 0.0f);
 
     UserInterface user_interface = UserInterface(master_renderer);
     //user_interface.loadStyle();

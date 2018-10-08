@@ -1,8 +1,8 @@
-#version 400 core
+#version 130
 
-layout (location = 0) in vec3 position;
-layout (location = 1) in vec2 textureCoords;
-layout (location = 2) in vec3 normal;
+in vec3 position;
+in vec2 textureCoords;
+in vec3 normal;
 
 out vec2 pass_textureCoords;
 out vec3 surfaceNormal;
@@ -15,6 +15,14 @@ uniform mat4 viewMatrix;
 uniform vec3 lightPosition;
 
 
+void restricted_inverse(mat4 src, out mat4 dst)
+{
+    mat3 m = transpose(mat3(src));
+    vec3 v = vec3(src[3]);
+    dst = mat4(m);
+    dst[3] = vec4(-m*v,1.0);
+}
+
 void main(void){
 
     vec4 worldPosition = transformationMatrix * vec4(position,1.0f);
@@ -24,7 +32,8 @@ void main(void){
 
     surfaceNormal = (transformationMatrix * vec4(normal,0.0f)).xyz;
     toLightVector = lightPosition - worldPosition.xyz;
-
-    toCameraVector = (inverse(viewMatrix) * vec4(0.0,0.0,0.0,1.0)).xyz - worldPosition.xyz;
+    mat4 realViewMatrix;
+    restricted_inverse(viewMatrix,realViewMatrix);
+    toCameraVector = ((realViewMatrix) * vec4(0.0,0.0,0.0,1.0)).xyz - worldPosition.xyz;
 
 }

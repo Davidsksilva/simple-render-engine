@@ -38,3 +38,18 @@ glm::vec3 Camera::getPosition(){
 
     return m_position;
 }
+
+void Camera::setPosition(glm::vec3 t_position){
+
+    m_position = t_position;
+}
+
+void Camera::setPitch( GLfloat t_value){
+
+    m_pitch = t_value;
+}
+
+void Camera::setYaw ( GLfloat t_value ){
+
+    m_yaw = t_value;
+}

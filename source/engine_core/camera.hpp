@@ -20,6 +20,9 @@ class Camera {
     glm::vec3 getPosition();
     GLfloat getPitch();
     GLfloat getYaw();
+    void setPosition( glm::vec3 t_position );
+    void setPitch( GLfloat t_value );
+    void setYaw( GLfloat t_value );
 
 };
 

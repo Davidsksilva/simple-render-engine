@@ -20,9 +20,9 @@ DEPENDENCIES = $(wildcard $(SOURCEDIR)/*.hpp) \
 		       $(wildcard $(SOURCEDIR)/models/*.hpp) \
 		  	   $(wildcard $(SOURCEDIR)/includes/*.hpp)\
 		       $(wildcard $(SOURCEDIR)/entities/*.hpp)\
-		  $(wildcard $(SOURCEDIR)/engine_core/*.hpp)\
-		  $(wildcard $(SOURCEDIR)/imgui/*.h)\
-		  $(wildcard $(SOURCEDIR)/interface/*.hpp)
+		  	   $(wildcard $(SOURCEDIR)/engine_core/*.hpp)\
+		       $(wildcard $(SOURCEDIR)/imgui/*.h)\
+		       $(wildcard $(SOURCEDIR)/interface/*.hpp)
 
 
 _OBJECTS = $(SOURCES:.cpp=.o)
