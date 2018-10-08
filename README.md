@@ -1,6 +1,6 @@
 # Simple Game Engine
 
-A Simple 3D Game Engine under development, using OpenGL and SFML.
+A Simple 3D Game Engine under development, using OpenGL, ImGui and GLFW.
 
 ## Getting Started
 
@@ -15,9 +15,9 @@ Before running the program, we need to download and install some dependencies:
 sudo apt-get install libXmu-dev libXi-dev libgl-dev dos2unix git wget
 ```
 
-**SFML**
+**GLFW**
 ```
-sudo apt-get install libsfml-dev
+sudo apt-get install libglfw3-dev
 ```
 
 ### Running
@@ -39,7 +39,6 @@ Then:
 ## Built With
 
 * [OpenGL](https://www.opengl.org/) - API for computer graphics
-* [SFML](https://www.sfml-dev.org/) - Interface to various componenets of the pc
 * [Glew](http://glew.sourceforge.net/) - Extention loading library for OpenGL
 
 
