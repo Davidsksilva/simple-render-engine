@@ -1,5 +1,3 @@
 run
 *.o
 .vscode/
-*.obj
-*.png
