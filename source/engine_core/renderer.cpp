@@ -102,7 +102,7 @@ GLuint Renderer::createFBO(){
     glGenTextures(1,&texture);
     glBindTexture( GL_TEXTURE_2D, texture );
 
-    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 1121, 687,0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, Display::kWIDTH, Display::kHEIGHT,0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -110,7 +110,7 @@ GLuint Renderer::createFBO(){
     GLuint rbo;
     glGenRenderbuffers(1, &rbo);
     glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorage( GL_RENDERBUFFER, GL_DEPTH_STENCIL, 1121, 687);
+    glRenderbufferStorage( GL_RENDERBUFFER, GL_DEPTH_STENCIL, Display::kWIDTH, Display::kHEIGHT);
     glBindRenderbuffer(GL_RENDERBUFFER,0);
     glFramebufferRenderbuffer( GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 

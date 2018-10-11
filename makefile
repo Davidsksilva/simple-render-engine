@@ -3,7 +3,7 @@ CXXFLAGS = -g -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
 SOURCEDIR = source
 BUILDIR = build
 
-LIBS = -lGLEW -lsfml-graphics -lsfml-window -lsfml-system -lGL -std=c++11 -std=c++17 -lstdc++fs -L/usr/local/lib -lglfw -lrt -lXrandr -lXinerama -lXi -lXcursor -lGL -lm -ldl -lXrender -ldrm -lXdamage -lX11-xcb -lxcb-glx -lxcb-dri2 -lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lXxf86vm -lXfixes -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp
+LIBS = -lGLEW -lsfml-graphics -lsfml-window -lsfml-system -lGL -std=c++11 -std=c++17 -lstdc++fs -L/usr/local/lib -lglfw3 -lrt -lXrandr -lXinerama -lXi -lXcursor -lGL -lm -ldl -lXrender -ldrm -lXdamage -lX11-xcb -lxcb-glx -lxcb-dri2 -lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lXxf86vm -lXfixes -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp
 
 EXECUTABLE= run
 

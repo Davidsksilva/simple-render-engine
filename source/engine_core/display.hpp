@@ -36,8 +36,8 @@ class Display{
    // constexpr static GLuint kWIDTH  = 1280;
     //constexpr static GLuint kHEIGHT = 720;
 	
-constexpr static GLuint kWIDTH  = 1121;
-    constexpr static GLuint kHEIGHT = 687;
+    static GLuint kWIDTH  ;//= 1121;
+    static GLuint kHEIGHT ;//= 687;
 
 };
 

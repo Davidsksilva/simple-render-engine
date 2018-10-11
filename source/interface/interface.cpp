@@ -36,22 +36,20 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
         if(m_show_dock)
             ShowExampleAppDockSpace(&m_show_dock);
 
-        ImGui::SetNextWindowDockId(1);
-        ImGui::SetNextWindowSize(ImVec2(512,512), ImGuiSetCond_FirstUseEver);
+        
+        
+        ImGui::SetNextWindowSize(ImVec2(Display::kWIDTH,Display::kHEIGHT));
         ImGui::Begin("Rendering");
         {   
-           // std::cout << ImGui::GetWindowDockId() << std::endl;
             ImVec2 pos = ImGui::GetCursorScreenPos();
             auto tex = m_master_renderer.getTextureFBO();
-
             ImGui::GetWindowDrawList()->AddImage(
                 (void*)tex, ImGui::GetCursorScreenPos(),
                 ImVec2(ImGui::GetCursorScreenPos().x + ImGui::GetWindowWidth(), 
-            ImGui::GetCursorScreenPos().y + ImGui::GetWindowHeight() - 30),ImVec2(0,1), ImVec2(1,0));
+            ImGui::GetCursorScreenPos().y + ImGui::GetWindowHeight()),ImVec2(0,1), ImVec2(1,0));
         }
-	//std::cout << ImGui::GetWindowWidth() << " "<< ImGui::GetWindowHeight() << std::endl; 
-	m_master_renderer.setDisplayHeight( ImGui::GetWindowHeight());
-	m_master_renderer.setDisplayWidth( ImGui::GetWindowWidth());
+        Display::kWIDTH = ImGui::GetWindowWidth();
+        Display::kHEIGHT = ImGui::GetWindowHeight();
         ImGui::End();
         ImGui::SetNextWindowDockId(2);
         ImGui::Begin("Objects");

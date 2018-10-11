@@ -62,7 +62,8 @@ int main(int, char**)
     while (!glfwWindowShouldClose(Display::window))
     {
          // entity.increasePosition(0,0,-0.1f);
-        glViewport( 0, 0, 1121, 687);
+        glViewport( 0, 0, Display::kWIDTH, Display::kHEIGHT);
+
         camera.move();
         //entity.increaseRotation(0,0.01f,0);
         //std::cout << entities.size() << std::endl;

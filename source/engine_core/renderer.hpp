@@ -30,8 +30,6 @@ class Renderer{
     void prepareInstance( Entity t_entity );
 
     GLuint m_fbo;
-    GLuint m_height;
-    GLuint m_width;
     GLuint m_rbo;
   
     public:

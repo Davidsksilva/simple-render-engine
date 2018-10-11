@@ -1,5 +1,9 @@
 #include "display.hpp"
 
+// Defining static attributes
+GLuint Display::kWIDTH = 1024;
+GLuint Display::kHEIGHT = 768;
+
 // Creating static pointer to the window
 GLFWwindow* Display::window;
 

@@ -33,10 +33,6 @@ class MasterRenderer{
     void setLightIntensity( GLfloat t_value );
     void setLightColor( glm::vec3 t_value );
     void setLightPosition( glm::vec3 t_position);
-    void setDisplayHeight ( GLuint t_value);
-    GLuint getDisplayHeight();
-    void setDisplayWidth (GLuint t_value);
-    GLuint getDisplayWidth ();
     glm::vec3 getLightPosition();
     glm::vec3 getCameraPosition();
     void setCameraPosition( glm::vec3 t_position );
