@@ -23,12 +23,15 @@ class Renderer{
     glm::mat4 projectionMatrix;
     StaticShader m_shader;
 
-    void createProjectionMatrix();
+    //void createProjectionMatrix(GLuint t_width, GLuint t_height);
+   void createProjectionMatrix();
     void prepareTexturedModel(  TexturedModel t_model );
     void unbindTexturedModel();
     void prepareInstance( Entity t_entity );
 
     GLuint m_fbo;
+    GLuint m_height;
+    GLuint m_width;
     GLuint m_rbo;
   
     public:

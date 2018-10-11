@@ -40,7 +40,7 @@ void main(void){
 
         if( SpecularFactor > 0 ){
             SpecularFactor = pow(SpecularFactor, specularPower);
-            SpecularColor = vec4(SpecularFactor * specularIntensity * lightColor,1.0f);
+            SpecularColor = vec4(SpecularFactor * lightIntensity * lightColor,1.0f);
         }
     }
 

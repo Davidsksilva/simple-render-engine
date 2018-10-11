@@ -39,7 +39,7 @@ int main(int, char**)
     TexturedModel model = TexturedModel (model_raw, model_texture);
 
     Entity entity = Entity( model, glm::vec3(0.0f,-1.0f,-1.0f), glm::vec3(0.0f,0.0f,0.0f), 1.0f );
-    Light light = Light(glm::vec3(200.0f,200.0f,100.0f), glm::vec3(1.0f,1.0f,1.0f), 0.2f);
+    Light light = Light(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), 0.5f);
     Camera camera = Camera();
 
     std::vector <Entity*> entities;
@@ -62,7 +62,7 @@ int main(int, char**)
     while (!glfwWindowShouldClose(Display::window))
     {
          // entity.increasePosition(0,0,-0.1f);
-        glViewport( 0, 0, 512, 512);
+        glViewport( 0, 0, 1121, 687);
         camera.move();
         //entity.increaseRotation(0,0.01f,0);
         //std::cout << entities.size() << std::endl;

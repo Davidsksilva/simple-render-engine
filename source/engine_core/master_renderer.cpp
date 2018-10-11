@@ -112,4 +112,20 @@ glm::vec3 MasterRenderer::getLightPosition(){
 
     return m_light.getPosition();
 }
+void MasterRenderer::setDisplayHeight ( GLuint t_value){
+
+	m_display_height = t_value;
+}
+GLuint MasterRenderer::getDisplayHeight(){
+
+	return m_display_height;
+}
+void MasterRenderer::setDisplayWidth (GLuint t_value){
+
+	m_display_width = t_value;
+}
+GLuint MasterRenderer::getDisplayWidth (){
+
+	return m_display_width;
+}
 

@@ -21,7 +21,12 @@ void Camera::move(){
     if( sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         m_position.z += 0.02f;
     }
-
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+		m_yaw-= 0.5f;
+	}
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
+		m_yaw+= 0.5f;
+	}
 }
 
 GLfloat Camera::getPitch(){

@@ -57,9 +57,9 @@ int Display::create(GLuint t_w, GLuint t_h, const char * t_title){
 
      // Setup style
     ImGui::GetStyle().WindowRounding = 0.0f;
-    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsDark();
     //ImGui::StyleColorsClassic();
-    //ImGui::StyleColorsLight();
+    ImGui::StyleColorsLight();
 
 }
 

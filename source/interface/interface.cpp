@@ -46,9 +46,12 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
 
             ImGui::GetWindowDrawList()->AddImage(
                 (void*)tex, ImGui::GetCursorScreenPos(),
-                ImVec2(ImGui::GetCursorScreenPos().x + 512, 
-            ImGui::GetCursorScreenPos().y + 512),ImVec2(0,1), ImVec2(1,0));
+                ImVec2(ImGui::GetCursorScreenPos().x + ImGui::GetWindowWidth(), 
+            ImGui::GetCursorScreenPos().y + ImGui::GetWindowHeight() - 30),ImVec2(0,1), ImVec2(1,0));
         }
+	//std::cout << ImGui::GetWindowWidth() << " "<< ImGui::GetWindowHeight() << std::endl; 
+	m_master_renderer.setDisplayHeight( ImGui::GetWindowHeight());
+	m_master_renderer.setDisplayWidth( ImGui::GetWindowWidth());
         ImGui::End();
         ImGui::SetNextWindowDockId(2);
         ImGui::Begin("Objects");
@@ -89,7 +92,7 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
 
                 if (ImGui::BeginPopupModal("Select Model"))
                 {
-                    ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Select the model:");
+                    ImGui::TextColored(ImVec4(0.0f,0.0f,1.0f,1.0f), "Select the model:");
                     for(int i = 0;i < files_model.size(); i++){
                         char buf[32];
                         sprintf(buf, "%s", files_model[i]);
@@ -116,7 +119,7 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
 
                 if (ImGui::BeginPopupModal("Select Texture"))
                 {
-                    ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Select the texture:");
+                    ImGui::TextColored(ImVec4(0.0f,0.0f,1.0f,1.0f), "Select the texture:");
                     for(int i = 0;i < files_texture.size(); i++){
                         char buf[32];
                         sprintf(buf, "%s", files_texture[i]);
@@ -140,7 +143,7 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
                         RawModel model_raw = loader.loadObj(buf1);
                         ModelTexture model_texture = ModelTexture( loader.loadTexture( buf2),10.0f,1.0f );
                         TexturedModel model = TexturedModel (model_raw, model_texture);
-                        Entity *entity = new Entity( model, glm::vec3(0.0f,-1.0f,-1.0f), glm::vec3(0.0f,0.0f,0.0f), 1.0f );
+                        Entity *entity = new Entity( model, glm::vec3(0.0f,0.0f,-2.0f), glm::vec3(0.0f,0.0f,0.0f), 1.0f );
                         t_entities.push_back(entity);
                     }
                     
@@ -231,7 +234,7 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
         ImGui::End();
         ImGui::Begin("Scene Properties");
             ImGui::PushItemWidth(300);
-            ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Background:");
+            ImGui::TextColored(ImVec4(0.0f,0.0f,1.0f,1.0f), "Background:");
             ImGui::Spacing();
             ImGui::Text("Background Color");
             ImGui::SameLine(150);
@@ -240,15 +243,15 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
             }
             ImGui::Separator();
 
-            ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Directional Light:");
+            ImGui::TextColored(ImVec4(0.0f,0.0f,1.0f,1.0f), "Directional Light:");
             ImGui::Spacing();
-            static float f1 = 0.2f;
+            static float f1 = 0.5f;
             static float vec3f_light_position[3] = {1.0f,1.0f,1.0f};
 
             vec3f_light_position[0] = m_master_renderer.getLightPosition().x;
             vec3f_light_position[1] = m_master_renderer.getLightPosition().y;
             vec3f_light_position[2] = m_master_renderer.getLightPosition().z;
-
+	    //f1 = m_master_renderer.getLightIntensity();
 
             ImGui::Text("Intensity");
             ImGui::SameLine(150); ImGui::DragFloat("##lightintensity", &f1, 0.005f,0.0f,1.0f);
@@ -274,7 +277,7 @@ void UserInterface::startInterface( std::vector<Entity*>& t_entities ){
             vec2f_camera_rotation[0] = m_master_renderer.getCameraPitch();
             vec2f_camera_rotation[1] = m_master_renderer.getCameraYaw();
 
-            ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f), "Camera:");
+            ImGui::TextColored(ImVec4(0.0f,0.0f,1.0f,1.0f), "Camera:");
             ImGui::Spacing();
             ImGui::Text("Position");
             ImGui::SameLine(150);

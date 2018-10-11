@@ -19,6 +19,8 @@ class MasterRenderer{
     Renderer m_renderer;
     Light& m_light;
     Camera& m_camera;
+    GLuint m_display_height;
+    GLuint m_display_width;
     std::map < TexturedModel, std::vector< Entity >> m_entities;
 
     public:
@@ -31,6 +33,10 @@ class MasterRenderer{
     void setLightIntensity( GLfloat t_value );
     void setLightColor( glm::vec3 t_value );
     void setLightPosition( glm::vec3 t_position);
+    void setDisplayHeight ( GLuint t_value);
+    GLuint getDisplayHeight();
+    void setDisplayWidth (GLuint t_value);
+    GLuint getDisplayWidth ();
     glm::vec3 getLightPosition();
     glm::vec3 getCameraPosition();
     void setCameraPosition( glm::vec3 t_position );
