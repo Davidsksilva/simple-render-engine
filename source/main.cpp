@@ -7,7 +7,7 @@
 #include "entities/entity.hpp"
 #include "engine_core/camera.hpp"
 #include "engine_core/loader.hpp"
-#include "engine_core/renderer.hpp"
+#include "engine_core/entity_renderer.hpp"
 #include "engine_core/master_renderer.hpp"
 #include "engine_core/display.hpp"
 #include "engine_core/light.hpp"
@@ -42,6 +42,7 @@ int main(int, char**)
     Light light = Light(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), 0.5f);
     Camera camera = Camera();
 
+    Terrain terrain = Terrain(0,-1,800,128,loader,ModelTexture(loader.loadTexture("source/res/img/rock.png"),10.0f,1.0f));
     std::vector <Entity*> entities;
     //entities.push_back(&entity);
 
@@ -70,6 +71,8 @@ int main(int, char**)
         for( Entity* ent : entities){
             master_renderer.processEntity(*ent);
         }
+        //master_renderer.processEntity(entity);
+        master_renderer.processTerrain(terrain);
         master_renderer.renderFBO(light, camera );
 
         user_interface.startInterface(entities);

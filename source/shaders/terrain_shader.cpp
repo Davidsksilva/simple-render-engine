@@ -1,15 +1,15 @@
-#include "static_shader.hpp"
+#include "terrain_shader.hpp"
 
-StaticShader::StaticShader() : ShaderProgram("source/res/shaders/vertexShader.glsl","source/res/shaders/fragmentShader.glsl"){
+TerrainShader::TerrainShader() : ShaderProgram("source/res/shaders/terrainVertexShader.glsl","source/res/shaders/terrainFragmentShader.glsl"){
 
     createProgram();
 }
 
-StaticShader::~StaticShader(){
+TerrainShader::~TerrainShader(){
 
 }
 
-void StaticShader::bindAttributes(){
+void TerrainShader::bindAttributes(){
 
     bindAttribute(0, "position");
     bindAttribute(1, "textureCoords");
@@ -17,7 +17,7 @@ void StaticShader::bindAttributes(){
 
 }
 
-void StaticShader::getAllUniformLocations(){
+void TerrainShader::getAllUniformLocations(){
 
     m_loc_transformation_matrix = getUniformLocation( "transformationMatrix" );
     m_loc_projection_matrix = getUniformLocation( "projectionMatrix" );
@@ -29,30 +29,30 @@ void StaticShader::getAllUniformLocations(){
     m_loc_specular_power = getUniformLocation( "specularPower");
 }
 
-void StaticShader::loadTransformationMatrix( const glm::mat4 p_matrix ){
+void TerrainShader::loadTransformationMatrix( const glm::mat4 p_matrix ){
 
     loadMatrix( m_loc_transformation_matrix, p_matrix );
 }
 
-void StaticShader::loadProjectionMatrix( const glm::mat4 p_matrix ){
+void TerrainShader::loadProjectionMatrix( const glm::mat4 p_matrix ){
 
     loadMatrix( m_loc_projection_matrix, p_matrix );
 }
 
-void StaticShader::loadViewMatrix( const Camera p_camera ){
+void TerrainShader::loadViewMatrix( const Camera p_camera ){
 
     glm::mat4 matrix = utils::createViewMatrix( p_camera );
     loadMatrix( m_loc_view_matrix, matrix );
 }
 
-void StaticShader::loadLight( Light p_light ){
+void TerrainShader::loadLight( Light p_light ){
 
     loadVector( m_loc_light_color, p_light.getColor());
     loadVector( m_loc_light_position, p_light.getPosition());
     loadFloat( m_loc_light_intensity, p_light.getIntensity());
 }
 
-void StaticShader::loadSpecular( ModelTexture p_model_texture ){
+void TerrainShader::loadSpecular( ModelTexture p_model_texture ){
     
     loadFloat( m_loc_specular_intensity, p_model_texture.getSpecularIntensity());
     loadFloat( m_loc_specular_power, p_model_texture.getSpecularPower());

@@ -1,15 +1,13 @@
-#ifndef STATIC_SHADER_HPP
-#define STATIC_SHADER_HPP
+#ifndef TERRAIN_SHADER_HPP
+#define TERRAIN_SHADER_HPP
+
 #include "shader_program.hpp"
 #include "../includes/utilities.hpp"
 #include "../engine_core/light.hpp"
 #include "../models/model_texture.hpp"
 
-class Camera;
+class TerrainShader : public ShaderProgram{
 
-
-class StaticShader : public ShaderProgram{
-    
     protected:
 
     GLuint m_loc_transformation_matrix;
@@ -26,14 +24,14 @@ class StaticShader : public ShaderProgram{
 
     public:
     
-    ~StaticShader();
-    StaticShader();
+    ~TerrainShader();
+    TerrainShader();
 
     void loadTransformationMatrix( const glm::mat4 p_matrix );
     void loadProjectionMatrix( const glm::mat4 p_matrix );
     void loadViewMatrix ( const Camera p_camera );
     void loadLight( Light p_light );
     void loadSpecular( ModelTexture p_model_texture );
-};
 
-#endif // STATIC_SHADER_HPP
+};
+#endif // TERRAIN_SHADER_HPP
