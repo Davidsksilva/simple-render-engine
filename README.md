@@ -1,4 +1,4 @@
-# Simple Game Engine
+# Simple Render Engine
 
 A Simple 3D Game Engine under development, using OpenGL, ImGui and GLFW.
 
