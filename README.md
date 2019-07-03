@@ -36,22 +36,6 @@ Then:
 ./run
 ```
 
-## Built With
-
-* [OpenGL](https://www.opengl.org/) - API for computer graphics
-* [Glew](http://glew.sourceforge.net/) - Extention loading library for OpenGL
-
-
-
-## Authors
-
-* **David Simon** - *Whole work* - [Davidsksilva](https://github.com/Davidsksilva)
-
-
-## License
-
-Still Working 
-
 ## Acknowledgments
 
 * Thanks to ThinMatrix for the inspiration
