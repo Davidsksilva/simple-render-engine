@@ -1,6 +1,6 @@
 # Simple Render Engine
 
-A Simple 3D Game Engine under development, using OpenGL, ImGui and GLFW.
+A Simple 3DvRendering Engine, using OpenGL, ImGui and GLFW.
 
 ## Getting Started
 
