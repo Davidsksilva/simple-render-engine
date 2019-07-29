@@ -17,7 +17,6 @@ void TerrainRenderer::render( std::vector <Terrain> p_terrains ){
     for(Terrain terrain : p_terrains){
         prepareTerrain(terrain);
         loadModelMatrix(terrain);
-        std::cout << terrain.getModel().getVertexCount() << std::endl;
         glDrawElements( GL_TRIANGLES,terrain.getModel().getVertexCount(), GL_UNSIGNED_INT, 0 );
         unbindTexturedModel();
     }
