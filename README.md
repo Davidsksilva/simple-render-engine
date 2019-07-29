@@ -1,6 +1,24 @@
 # Simple Render Engine
 
-A Simple 3DvRendering Engine, using OpenGL, ImGui and GLFW.
+A Simple 3D Rendering Engine, using OpenGL, ImGui and GLFW in C++. Current features:
+
+- 3D OpenGL Context with VAO, VBO, FBO and Index Buffer
+
+- Fragment and Vertex Shader in GLSL
+
+- Graphic UI
+
+- Twekable object properties
+
+- Ortographic/Perspective camera switch
+
+- .obj importer
+
+  ![](./image.png)
+
+
+
+
 
 ## Getting Started
 
@@ -11,14 +29,31 @@ Now we are going to see how to set up and run the engine. Tested only on Ubuntu 
 Before running the program, we need to download and install some dependencies:
 
 **Glew**
+
 ```
-sudo apt-get install libXmu-dev libXi-dev libgl-dev dos2unix git wget
+sudo apt-get install libglew-dev
+```
+
+**OpenGL**
+
+```
+sudo apt-get install libgl-dev
 ```
 
 **GLFW**
 ```
 sudo apt-get install libglfw3-dev
 ```
+
+
+
+**SFML** (used just for keyboard inputs)
+
+```
+sudo apt-get install libsfml-dev
+```
+
+
 
 ### Running
 
